@@ -1,20 +1,41 @@
-import React, { useState } from "react";
-import NavBar from "../component/header/NavBar";
+import React, { useEffect, useState } from "react";
 import { FaLongArrowAltLeft, FaUser, FaUserAlt } from "react-icons/fa";
 import { BiEnvelope } from "react-icons/bi";
 import { MdPhone } from "react-icons/md";
-import { useAddContactMutation } from "../service/contactApi";
 import { toast, Bounce } from "react-toastify";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { useGetContactByIdQuery, useUpdateContactMutation } from "../../service/contactApi";
+import NavBar from "../../component/header/NavBar";
 
-const AddContact = () => {
+const UpdateContact = () => {
+  const { contactId } = useParams();
+  const [updateContact, {isLoading: isUpdating}] = useUpdateContactMutation();
+  const {data: contact, isLoading} = useGetContactByIdQuery(contactId);
   const [firstName, setFirstName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const [showSaveButton, setShowSaveButton] = useState(false);
   const navigate = useNavigate();
-  const [addContact, { isLoading }] = useAddContactMutation();
+
+
+  useEffect(()=> {
+    if(contact){
+        setFirstName(contact.firstName || "");
+        setSurname(contact.surname || "");
+        setEmail(contact.email || "");
+        setPhoneNumber(contact.phoneNumber || "");
+    }
+  }, [contact]);
+
+  useEffect(()=> {
+    if(contact){
+       setShowSaveButton(
+        contact.firstName !== firstName || contact.surname !== surname || contact.email !== email || contact.phoneNumber !== phoneNumber
+       );
+    }
+  }, [firstName, surname, email, phoneNumber, contact, showSaveButton]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,10 +48,10 @@ const AddContact = () => {
     };
 
     try {
-      const response =  await addContact(contactData).unwrap();
-      const contactId = response.id;
-      navigate(`/contactDetails/${contactId}`);
-      toast.success("Contact saved succesfully", {
+      const response = await updateContact({contactId, contactData}).unwrap();
+      const updatedContactId = response.id;
+      navigate(`/contactDetails/${updatedContactId}`);
+      toast.success("Contact updated succesfully", {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: true,
@@ -47,7 +68,7 @@ const AddContact = () => {
       setEmail("");
       setPhoneNumber("");
     } catch (error) {
-      // console.log('from add contact error:', error);
+      console.log('from add contact error:', error);
       toast.error(`Failed to add contact: ${error.data.message}`, {
         position: "bottom-right",
         autoClose: 5000,
@@ -63,24 +84,26 @@ const AddContact = () => {
   };
 
   const navigateToHome = () => {
-    navigate('/')
-  }
+    navigate("/");
+  };
 
   return (
     <div className="addContact-Container">
       <div className="sticky top-0 z-10">
         <NavBar />
         <div className="container px-5 sm:px-1 mx-auto py-2 flex justify-between items-center text-lg md:text-xl bg-white">
-          <button onClick={() => navigateToHome()}><FaLongArrowAltLeft className="text-xl text-slate-900"/></button>
-          <button
-            onClick={handleSubmit}
-            form="a-form"
-            type="button"
-            className="save-button bg-blue-800 px-7 py-2 rounded-full text-white"
-            disabled={isLoading}
-          >
-            <h2>Save</h2>
+          <button onClick={() => navigateToHome()}>
+            <FaLongArrowAltLeft className="text-xl text-slate-900" />
           </button>
+             <button
+             onClick={handleSubmit}
+             form="a-form"
+             type="button"
+             className={`save-button px-7 py-2 rounded-full text-white cursor-pointer ${showSaveButton? 'bg-blue-800': 'bg-gray-300'}`}
+             disabled={isLoading || !showSaveButton}
+           >
+             <h2>Save</h2>
+           </button>
         </div>
       </div>
       <div className="contact-image-container flex justify-end justify-self-center py-12 ">
@@ -163,4 +186,4 @@ const AddContact = () => {
   );
 };
 
-export default AddContact;
+export default UpdateContact;

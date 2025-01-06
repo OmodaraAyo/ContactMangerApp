@@ -3,30 +3,32 @@ import NavBar from "../../component/header/NavBar";
 import { FaCalendarAlt, FaEllipsisV, FaLongArrowAltLeft, FaTrashAlt, FaUser } from "react-icons/fa";
 import { MdChatBubble, MdEdit, MdPhone, MdVideocam } from "react-icons/md";
 import { useNavigate, useParams } from "react-router";
-import { useGetContactByIdQuery } from "../../service/contactApi";
+import { useGetContactByIdQuery, useUpdateContactMutation } from "../../service/contactApi";
 import { BiEnvelope } from "react-icons/bi";
 
 const ContactDetails = () => {
   const navigate = useNavigate();
   const {contactId} = useParams();
-  const {data, isLoading, isError} = useGetContactByIdQuery(contactId);
-  console.log(data)
+  const {data: contact, isLoading, isError} = useGetContactByIdQuery(contactId);
+  console.log(contact)
   const [hasEmail, setHasEmail] = useState(false);
   const [hasPhoneNumber, setHasPhoneNumber] = useState(false);
 
   useEffect(() => {
-    if(data){
-      setHasEmail(!!data.email);
-      setHasPhoneNumber(!!data.phoneNumber);
+    if(contact){
+      setHasEmail(!!contact.email);
+      setHasPhoneNumber(!!contact.phoneNumber);
     }
-  }, [data]);
-
+  }, [contact]);
 
   const navigateToHomePage = () => {
     navigate('/')
   }
+  const navigateToUpdateContactPage = () =>{
+    navigate(`/update/${contactId}`)
+  }
   const capitalizeChatAtZero = (name) => {
-    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
+    return name
   }
   return (
     <div>
@@ -35,7 +37,7 @@ const ContactDetails = () => {
         <div className="container px-5 sm:px-1 mx-auto py-2 flex justify-between items-center text-lg md:text-xl bg-white">
           <button onClick={() => navigateToHomePage()}><FaLongArrowAltLeft className="text-xl text-slate-900"/></button>
           <div className="btn-container flex flex-row gap-3">
-            <button className="rounded-full px-2 p-2 hover:bg-gray-100"><MdEdit className="text-lg text-slate-900"/></button>
+            <button onClick={() => navigateToUpdateContactPage()} className="rounded-full px-2 p-2 hover:bg-gray-100"><MdEdit className="text-lg text-slate-900"/></button>
             <button className="rounded-full px-2 p-2 hover:bg-gray-100"><FaTrashAlt className="text-lg text-slate-900"/></button>
             <button className="rounded-full px-2 p-2 hover:bg-gray-100"><FaEllipsisV className="text-lg text-slate-900"/></button>
           </div>
@@ -54,7 +56,7 @@ const ContactDetails = () => {
       </div>
       <h2 className="flex justify-center items-center -mt-8 text-xl sm:text-2xl font-sans tracking-wide font-normal mb-5">
         {isLoading && ''}
-        {data && data.firstName? `${capitalizeChatAtZero(data.firstName)}`: ''}
+        {contact && contact.fullName? `${capitalizeChatAtZero(contact.fullName)}`: ''}
         </h2>
       <div className="flex flex-row justify-center items-center gap-5 mb-20">
         <button className="flex flex-col justify-center items-center"><div className="rounded-full px-2 p-2 flex justify-center items-center w-10 h-10 bg-gray-200 hover:bg-gray-300"><BiEnvelope className={`text-xl sm:text-[1.3rem] ${hasEmail? 'text-black': 'text-[#ada9a9]'}`}/></div><h3 className="font-normal text-xs sm:text-sm">Email</h3></button>
@@ -67,18 +69,27 @@ const ContactDetails = () => {
         {hasEmail? (
          <div className="flex justify-start items-center gap-4">
           <BiEnvelope className="text-xl sm:text-[1.2rem] text-[#262525]"/>
-          <button className="text-sm sm:text-base font-light text-[#2f6dfe] tracking-wide">{data.email.toLowerCase()}</button>
+          <button className="text-sm sm:text-base font-light text-[#5384f7] hover:text-[#2f6dfe] tracking-wide">{contact.email.toLowerCase()}</button>
          </div>
-        ): (<button className="text-sm sm:text-base text-[#2f6dfe]">Add email</button>)}
-
+        ): (
+          <div className="flex justify-start items-center gap-4">
+          <BiEnvelope className="text-xl sm:text-[1.2rem] text-[#262525]"/>
+          <button className="text-sm sm:text-base text-[#2f6dfe]">Add email</button>
+         </div>
+        )}
         {hasPhoneNumber? (
          <div className="flex justify-start items-center gap-4">
           <MdPhone className="text-xl sm:text-[1.2rem] text-[#262525]"/>
-          <button className="text-sm sm:text-base font-light text-[#2f6dfe] tracking-wide">{data.phoneNumber.toLowerCase()}</button>
+          <button className="text-sm sm:text-base font-light text-[#5384f7] hover:text-[#2f6dfe] tracking-wide">{contact.phoneNumber.toLowerCase()}</button>
           <h3 className="-ml-3 -mt-2 font-medium text-lg">.</h3>
           <h4 className="-ml-3 text-[0.796rem] font-medium">Mobile</h4>
          </div>
-        ): (<button className="text-sm sm:text-base text-[#2f6dfe]">Add phone number</button>)}
+        ): (
+          <div className="flex justify-start items-center gap-4">
+          <MdPhone className="text-xl sm:text-[1.2rem] text-[#262525]"/>
+          <button className="text-sm sm:text-base text-[#2f6dfe]">Add phone number</button>
+         </div>
+       )}
       </div>
     </div>
   );

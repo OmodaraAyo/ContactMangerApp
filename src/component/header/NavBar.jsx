@@ -10,6 +10,11 @@ const NavBar = () => {
   const [scrolling, setScrolling] = useState(false);
   const [showSearchButton, setShowSearchButton] = useState(false);
 
+  const handleShowSearchButtonAndSideBar = () => {
+    setShowSearchButton(true);
+    setShowSideBar(false);
+  }
+
   useEffect(() => {
     const handleScroll = () => {
       window.scrollY > 50 ? setScrolling(true) : setScrolling(false);
@@ -37,7 +42,7 @@ const NavBar = () => {
         scrolling ? "bg-gray-800" : `bg-gray-950 bg-opacity-10 `
       }`}
     >
-      {showSideBar && <SideBar setShowSideBar={setShowSideBar} />}
+      {showSideBar && <SideBar setShowSideBar={setShowSideBar} setShowSearchButton={setShowSearchButton} />}
       <div className="container px-4 sm:px-0 sm:mx-auto py-5 flex justify-between items-center">
         <div className="logo-And-SideBar-container flex flex-row justify-start items-center gap-1">
           <button
@@ -71,7 +76,7 @@ const NavBar = () => {
             </div>
           )}
         </div>
-        <button className="search-bar hidden sm:flex sm:flex-row justify-center items-center bg-slate-100 opacity-85 rounded-md border-slate-100 w-full h-9 max-w-80 px-2 outline-none">
+        <button className="search-bar hidden sm:flex sm:flex-row justify-center items-center bg-slate-100 opacity-85 rounded-md border-slate-100 w-full h-9 max-w-[21rem] lg:max-w-[30rem] xl:max-w-[45rem] px-2 outline-none">
           <FaSearch className="text-slate-900" />
           <input
             type="text"
@@ -82,7 +87,7 @@ const NavBar = () => {
         </button>
         <div className="user-buttons flex justify-start items-center gap-1">
           <button
-            onClick={() => setShowSearchButton(true)}
+            onClick={() => handleShowSearchButtonAndSideBar()}
             className=" sm:hidden mt-1"
           >
             {showSearchButton ? (
