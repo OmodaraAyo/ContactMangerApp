@@ -19,7 +19,7 @@ const AddContact = () => {
           </button>
         </div>
       )}
-      <button onClick={()=> setShowCreateAContact(prev => !prev)} className={`w-14 h-14 flex justify-center items-center bg-gray-950 opacity-85 text-white text-4xl pb-2 rounded-xl shadow-md shadow-gray-700 mt-14 mr-9 sm:mr-5 md:mr-0`}>
+      <button onClick={()=> setShowCreateAContact(prev => !prev)} className={`w-14 h-14 flex justify-center items-center bg-gray-950 opacity-85 text-white text-4xl pb-2 rounded-xl shadow-md shadow-gray-700 mt-14 mr-6 sm:mr-5 md:mr-0`}>
         <p>+</p>
       </button>
     </div>
