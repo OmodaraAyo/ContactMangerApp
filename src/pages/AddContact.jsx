@@ -70,7 +70,8 @@ const AddContact = () => {
     <div className="addContact-Container">
       <div className="sticky top-0 z-10">
         <NavBar />
-        <div className="container px-5 sm:px-1 mx-auto py-2 flex justify-between items-center text-lg md:text-xl bg-white">
+        <div className="w-full bg-white">
+          <div className="container px-5 sm:px-1 mx-auto py-2 flex justify-between items-center text-lg md:text-xl bg-transparent">
           <button onClick={() => navigateToHome()}><FaLongArrowAltLeft className="text-xl text-slate-900"/></button>
           <button
             onClick={handleSubmit}
@@ -81,13 +82,14 @@ const AddContact = () => {
           >
             <h2>Save</h2>
           </button>
+          </div>
         </div>
       </div>
-      <div className="contact-image-container flex justify-end justify-self-center py-12 ">
+      <div className="contact-image-container flex justify-self-center py-12 ">
         <button className="bg-blue-100 w-[12rem] h-[12rem] rounded-full flex justify-center items-center overflow-hidden">
           <FaUser className="text-blue-300 text-[11rem] mt-6" />
         </button>
-        <div className="absolute mt-28 ml-">
+        <div className="absolute mt-28 ml-28">
           <div className="w-20 h-20 bg-white rounded-full absolute"></div>
           <button className="w-16 h-16 bg-blue-800 rounded-full relative mt-2 ml-2">
             <h2 className="text-3xl text-white mb-1">+</h2>
