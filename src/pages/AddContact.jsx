@@ -85,7 +85,7 @@ const AddContact = () => {
           </div>
         </div>
       </div>
-      <div className="contact-image-container flex justify-self-center py-12 ">
+      <div className="contact-image-container flex w-full justify-center items-center py-12 ">
         <button className="bg-blue-100 w-[12rem] h-[12rem] rounded-full flex justify-center items-center overflow-hidden">
           <FaUser className="text-blue-300 text-[11rem] mt-6" />
         </button>
