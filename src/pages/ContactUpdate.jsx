@@ -4,12 +4,12 @@ import { BiEnvelope } from "react-icons/bi";
 import { MdPhone } from "react-icons/md";
 import { toast, Bounce } from "react-toastify";
 import { useNavigate, useParams } from "react-router";
-import { useGetContactByIdQuery, useUpdateContactMutation } from "../../service/contactApi";
-import NavBar from "../../component/header/NavBar";
+import { useGetContactByIdQuery, useUpdateContactMutation } from "../service/contactApi";
+import NavBar from "../component/header/NavBar";
 
-const UpdateContact = () => {
+const ContactUpdate = () => {
   const { contactId } = useParams();
-  const [updateContact, {isLoading: isUpdating}] = useUpdateContactMutation();
+  const [updateContact] = useUpdateContactMutation();
   const {data: contact, isLoading} = useGetContactByIdQuery(contactId);
   const [firstName, setFirstName] = useState("");
   const [surname, setSurname] = useState("");
@@ -186,4 +186,4 @@ const UpdateContact = () => {
   );
 };
 
-export default UpdateContact;
+export default ContactUpdate;

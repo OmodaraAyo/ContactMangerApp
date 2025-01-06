@@ -25,7 +25,7 @@ const ContactDetails = () => {
     navigate('/')
   }
   const navigateToUpdateContactPage = () =>{
-    navigate(`/update/${contactId}`)
+    navigate(`/updateContact/${contactId}`)
   }
   const capitalizeChatAtZero = (name) => {
     return name
