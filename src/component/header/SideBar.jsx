@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { FaLongArrowAltLeft, FaTrashAlt, FaUser } from "react-icons/fa";
 
 const SideBar = ({ setShowSideBar, setShowSearchButton }) => {
@@ -6,13 +6,13 @@ const SideBar = ({ setShowSideBar, setShowSearchButton }) => {
     setShowSideBar(false);
   };
 
-  useState(()=>{
+  useEffect(()=>{
     setShowSearchButton? setShowSearchButton(false): setShowSearchButton(false)
-  })
+  }, [setShowSearchButton]);
   
   return (
     <div
-      className={`absolute w-full h-screen max-w-64 md:max-w-80 bg-slate-900 bg-opacity-100 transition-transform duration-[5000ms] ease-in-out z-10 text-white ${
+      className={`absolute w-full h-screen max-w-64 md:max-w-80 bg-slate-900 bg-opacity-100 transition-transform duration-[5000ms] ease-in-out z-50 text-white ${
         setShowSideBar
           ? "transform translate-x-0"
           : "transform -translate-x-full"

@@ -4,8 +4,9 @@ import { BsGear } from "react-icons/bs";
 import { FaBars, FaLongArrowAltLeft, FaSearch } from "react-icons/fa";
 import { FaUser } from "react-icons/fa6";
 import SideBar from "./SideBar";
+import SearchBar from "../../reusable/SearchBar";
 
-const NavBar = () => {
+const NavBar = ({isSearchDisabled}) => {
   const [showSideBar, setShowSideBar] = useState(false);
   const [scrolling, setScrolling] = useState(false);
   const [showSearchButton, setShowSearchButton] = useState(false);
@@ -76,14 +77,10 @@ const NavBar = () => {
             </div>
           )}
         </div>
-        <button className="search-bar hidden sm:flex sm:flex-row justify-center items-center bg-slate-100 opacity-85 rounded-md border-slate-100 w-full h-9 max-w-[21rem] lg:max-w-[30rem] xl:max-w-[45rem] px-2 outline-none">
+        <button className="search-bar hidden sm:flex sm:flex-row justify-center items-center bg-slate-100 opacity-85 rounded-md border-slate-100 w-full h-9 max-w-[21rem] lg:max-w-[30rem] xl:max-w-[45rem] px-2 outline-none" 
+        disabled={isSearchDisabled} >
           <FaSearch className="text-slate-900" />
-          <input
-            type="text"
-            name="searchBox"
-            placeholder="Search"
-            className="container px-2 bg-transparent placeholder:text-gray-600 outline-none"
-          />
+          <SearchBar isSearchDisabled={isSearchDisabled}/>
         </button>
         <div className="user-buttons flex justify-start items-center gap-1">
           <button
@@ -97,16 +94,11 @@ const NavBar = () => {
             )}
           </button>
           {showSearchButton ? (
-            <form className="search-bar flex flex-row gap-5 justify-start items-center bg-slate-100 opacity-85 rounded-md border-slate-100 h-9 px-2 outline-none transform transition-transform duration-300 ease-in-out">
+            <form className="search-bar flex flex-row gap-5 justify-start items-center bg-slate-100 opacity-85 rounded-md border-slate-100 h-9 px-2 outline-none transform transition-transform duration-300 ease-in-out cursor-pointer">
               <button onClick={() => setShowSearchButton(false)} className="w-8 h-8 rounded-full hover:bg-gray-200">
                 <FaLongArrowAltLeft className="text-2xl text-slate-900"/>
               </button>
-              <input
-                type="text"
-                name="searchBox"
-                placeholder="Search"
-                className="container px-2 bg-transparent placeholder:text-gray-600 outline-none w-full"
-              />
+              <SearchBar isSearchDisabled={isSearchDisabled}/>
             </form>
           ) : (
             ""

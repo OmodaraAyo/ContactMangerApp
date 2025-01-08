@@ -32,10 +32,10 @@ const AddContact = () => {
       navigate(`/contactDetails/${contactId}`);
       toast.success("Contact saved succesfully", {
         position: "bottom-right",
-        autoClose: 5000,
+        autoClose: 1000,
         hideProgressBar: true,
         closeOnClick: true,
-        pauseOnHover: false,
+        pauseOnHover: true,
         draggable: false,
         progress: undefined,
         theme: "colored",
@@ -50,10 +50,10 @@ const AddContact = () => {
       // console.log('from add contact error:', error);
       toast.error(`Failed to add contact: ${error.data.message}`, {
         position: "bottom-right",
-        autoClose: 5000,
+        autoClose: 1000,
         hideProgressBar: true,
         closeOnClick: true,
-        pauseOnHover: false,
+        pauseOnHover: true,
         draggable: false,
         progress: undefined,
         theme: "dark",

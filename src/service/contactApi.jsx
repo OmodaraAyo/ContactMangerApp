@@ -33,6 +33,21 @@ export const contactApi = createApi({
         body: contactData,
       }),
     }),
+
+    deleteContactById: builder.mutation({
+        query: (contactId) => ({
+            url: `/deleteById/${contactId}`,
+            method: "DELETE",
+        })
+      }),
+
+    searchContactByName: builder.query({
+        query: (contactName) => ({
+            url: `/getContactByCharacter?character=${contactName}`,
+            method: "GET",
+        }),
+    }),
+    //Last closing tag...
   }),
   //endpoint closing tag...
 });
@@ -42,4 +57,6 @@ export const {
   useGetContactByIdQuery,
   useGetAllContactQuery,
   useUpdateContactMutation,
+  useDeleteContactByIdMutation,
+  useSearchContactByNameQuery,
 } = contactApi;
