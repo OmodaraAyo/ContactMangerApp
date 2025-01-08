@@ -8,12 +8,12 @@ import { toast, Bounce } from "react-toastify";
 import { useNavigate } from "react-router";
 
 const AddContact = () => {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isFocused, setIsFocused] = useState(false);
-  const navigate = useNavigate();
   const [addContact, { isLoading }] = useAddContactMutation();
 
   const handleSubmit = async (e) => {
@@ -47,7 +47,6 @@ const AddContact = () => {
       setEmail("");
       setPhoneNumber("");
     } catch (error) {
-      // console.log('from add contact error:', error);
       toast.error(`Failed to add contact: ${error.data.message}`, {
         position: "bottom-right",
         autoClose: 1000,

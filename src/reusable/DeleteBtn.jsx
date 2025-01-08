@@ -29,7 +29,6 @@ const DeleteBtn = ({ contactId }) => {
       });
       navigate(`/`);
     } catch (error) {
-        console.log("Error from deleteBtn: ", error)
       toast.error(`Failed to delete contact: ${error.data.message}`, {
         position: "bottom-right",
         autoClose: 1000,

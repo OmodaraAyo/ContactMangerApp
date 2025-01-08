@@ -8,8 +8,7 @@ const Header = () => {
   const [isArray, setIsArray] = useState(false);
   const [showPhoneNumber, setShowPhoneNumber] = useState(false);
   const navigate = useNavigate();
-  console.log(data);
-
+  
   const navigateToContactDetailsPage = (contactId) => {
       navigate(`/contactDetails/${contactId}`)
   }
